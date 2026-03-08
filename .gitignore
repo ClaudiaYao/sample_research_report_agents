@@ -14,5 +14,5 @@ wheels/
 .adk
 
 pyproject.toml
-python-version
+.python-version
 uv.lock
