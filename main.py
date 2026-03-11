@@ -14,16 +14,6 @@ logging.basicConfig(level=logging.ERROR)
 app_name = "deep_research_agent"
 session_id ="session12345"
 user_id ="user12345"
-
-# add a customized session service to log the session state changes for debugging and tracing
-class TracingSessionService(InMemorySessionService):
-    async def set_state(self, session_id, state):
-        print(f"Session {session_id} state updated: {state}")
-        return await super().set_state(session_id, state)
-    
-    async def update_state(self, session_id, updates):
-        print(f"update_state called: {session_id} -> {updates}")
-        return await super().update_state(session_id, updates)
     
 
 async def create_session(runner, session_id) -> Session:
@@ -32,7 +22,7 @@ async def create_session(runner, session_id) -> Session:
 
 
 async def run():
-    session_service = TracingSessionService()
+    session_service = InMemorySessionService()
     
     runner = Runner(agent=interactive_planner_agent, app_name="deep_research_agent", session_service=session_service)
     session = await create_session(runner, session_id="session12345")
